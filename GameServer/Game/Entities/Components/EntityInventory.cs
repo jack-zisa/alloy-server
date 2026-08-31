@@ -137,7 +137,11 @@ public struct EntityInventory : IEntityIdentifiable, IDisposable {
         stats.Set(StatType.MagicPotionStack, _potionStacks[1]);
         for (var i = 0; i < _size; i++)
             if (_itemUpdates.IsSet(i)) {
-                stats.Set(StatType.Inventory0 + i, _items[i]?.ObjectType ?? -1);
+                // Inventory0..11 only covers 12 slots but players have 20 (_size),
+                // so i >= 12 was overflowing into unrelated stats (i=18 = Condition1,
+                // hence the wall of bogus status effects on spawn)
+                if (i < 12)
+                    stats.Set(StatType.Inventory0 + i, _items[i]?.ObjectType ?? -1);
                 stats.Set(StatType.InventoryData0 + i, _items[i]?.ExportString());
             }
 
