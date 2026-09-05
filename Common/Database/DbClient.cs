@@ -141,11 +141,6 @@ public static class DbClient {
         }
 
         if (acc.LockOwner != gameServerGuid) {
-            if (acc.LockOwner != Guid.Empty) {
-                status = VerifyStatus.AccountInUse;
-                return (null, status);
-            }
-            
             // Lock account to the specified GameServer instance
             acc.LockOwner = gameServerGuid;
         }
