@@ -76,8 +76,7 @@ public class EntityInventoryManager(World world, int capacity) : ManagerBase<Ent
         
         var item1 = playerInv[cmd.SlotA.SlotId];
         var item2 = playerInv[cmd.SlotB.SlotId];
-        if (!playerInv.IsEquippable(item1, cmd.SlotB.SlotId) ||
-            !playerInv.IsEquippable(item2, cmd.SlotA.SlotId))
+        if (!playerInv.IsEquippable(item1, cmd.SlotB.SlotId) || !playerInv.IsEquippable(item2, cmd.SlotA.SlotId))
             return false;
 
         playerInv.SwapSlots(cmd.SlotA.SlotId, cmd.SlotB.SlotId);

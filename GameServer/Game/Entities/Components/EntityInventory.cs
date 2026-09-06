@@ -89,6 +89,8 @@ public struct EntityInventory : IEntityIdentifiable, IDisposable {
     }
     
     public bool IsEquippable(Item item, int slot) {
+        if (item == null) return true;
+        
         var slotType = _slotTypes[slot];
         return slotType == 0 || slotType == item.SlotType;
     }
