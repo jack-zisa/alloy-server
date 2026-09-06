@@ -1,3 +1,4 @@
+using Common;
 using Common.Resources.Xml;
 using Common.Resources.Xml.Descriptors;
 using GameServer.Game.Entities;
@@ -76,5 +77,17 @@ public class GiveCommand : Command {
         inventory.SetItem(nextSlot, new Item(item.Root));
         
         user.SendPacket(new InvUpdate(nextSlot, item.ObjectType));
+    }
+}
+
+[Command("effect", CommandPermissionLevel.Player)]
+public class StatusEffectCommand : Command {
+    public override async Task ExecuteAsync(User user, string args) {
+        if (!Enum.TryParse(args, out ConditionEffectIndex effect)) {
+            user.SendError($"Condition effect {args} does not exist.");
+            return;
+        }
+        
+        user.SendPacket(new ConditionEffect(args));
     }
 }
