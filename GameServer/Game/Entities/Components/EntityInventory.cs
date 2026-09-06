@@ -1,16 +1,11 @@
-using System;
 using System.Buffers;
 using Common;
-using Common.Database;
 using Common.Database.Models;
 using Common.Game;
-using Common.Resources.World;
 using Common.Resources.Xml;
 using Common.Resources.Xml.Descriptors;
-using Common.Structs;
 using Common.Utilities;
 using Common.Utilities.Collections;
-using GameServer.Game.Network;
 using GameServer.Game.Worlds;
 
 namespace GameServer.Game.Entities.Components;
@@ -47,6 +42,24 @@ public struct EntityInventory : IEntityIdentifiable, IDisposable {
         Array.Fill(_potionStacks, 0);
     }
 
+    public int GetSize() {
+        return _size;
+    }
+    
+    public int GetNextAvailableSlot() {
+        for (var i = 0; i < _items.Length; i++)
+            if (_items[i] == null)
+                return i;
+        return -1;
+    }
+    
+    public int GetNextAvailableSlot(int slotType) {
+        for (var i = 0; i < _items.Length; i++)
+            if (_items[i] == null && (_slotTypes[i] == slotType || _slotTypes[i] == 0))
+                return i;
+        return -1;
+    }
+
     public void Init(Span<int> slotTypes, Span<int> itemTypes) {
         slotTypes.CopyTo(_slotTypes);
         for (var i = 0; i < itemTypes.Length; i++) {
@@ -61,7 +74,7 @@ public struct EntityInventory : IEntityIdentifiable, IDisposable {
     public void SetItem(int slot, Item item) {
         if (slot < 0 || slot >= _size)
             return;
-
+        
         if (item != null && _slotTypes[slot] != 0 && item.SlotType != _slotTypes[slot])
             return;
         
@@ -119,9 +132,7 @@ public struct EntityInventory : IEntityIdentifiable, IDisposable {
         if (slot1 < 0 || slot1 >= _size || slot2 < 0 || slot2 >= _size)
             return;
         
-        var temp = _items[slot1];
-        _items[slot1] = _items[slot2];
-        _items[slot2] = temp;
+        (_items[slot1], _items[slot2]) = (_items[slot2], _items[slot1]);
         _itemUpdates.Set(slot1);
         _itemUpdates.Set(slot2);
     }

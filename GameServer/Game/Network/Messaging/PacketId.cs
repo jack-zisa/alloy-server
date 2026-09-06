@@ -66,5 +66,6 @@ public enum PacketId : byte {
     ACCEPTTRADE = 62,
     TRADEACCEPTED = 63,
     UNUSED7 = 64,
-    UNUSED8 = 65
+    UNUSED8 = 65,
+    INVUPDATE = 66
 }

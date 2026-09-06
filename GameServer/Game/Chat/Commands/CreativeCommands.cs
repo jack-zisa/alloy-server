@@ -1,7 +1,9 @@
 using Common.Resources.Xml;
+using Common.Resources.Xml.Descriptors;
 using GameServer.Game.Entities;
 using GameServer.Game.Entities.Extensions;
 using GameServer.Game.Network;
+using GameServer.Game.Network.Messaging.Outgoing;
 
 namespace GameServer.Game.Chat.Commands;
 
@@ -52,5 +54,27 @@ public class SpawnCommand : Command {
                 en.Move(world, x, y);
             }
         });
+    }
+}
+
+[Command("give", CommandPermissionLevel.Player)]
+public class GiveCommand : Command {
+    public override async Task ExecuteAsync(User user, string args) {
+        var item = XmlLibrary.Id2Item(args);
+        if (item == null) {
+            user.SendError($"Item {args} does not exist.");
+            return;
+        }
+        
+        var inventory = user.GameInfo.World.EntityInventories.Get(user.GameInfo.PlayerId);
+        var nextSlot = inventory.GetNextAvailableSlot(item.SlotType);
+        if (nextSlot == -1 || nextSlot >= inventory.GetSize()) {
+            user.SendError("Not enough space in inventory.");
+            return;
+        }
+        
+        inventory.SetItem(nextSlot, new Item(item.Root));
+        
+        user.SendPacket(new InvUpdate(nextSlot, item.ObjectType));
     }
 }
