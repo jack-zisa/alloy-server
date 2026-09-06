@@ -295,6 +295,8 @@ public enum ConditionEffectIndex : byte {
     Inspired = 59,
     ManaDeplete = 60,
     SheatheStance = 61,
+    Drought = 62,
+    Lucky = 63,
 
     ConditionCount
 }
