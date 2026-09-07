@@ -29,8 +29,8 @@ public record HealGroup : BehaviorScript {
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var healGroupInfo = host.Behavior.Resources.ResolveResource<HealGroupInfo>(this);
         if (healGroupInfo.RemainingTime <= 0) {
-            // if (host.HasConditionEffect(ConditionEffectIndex.Stunned)) // TODO: Condition Effects
-            //     return BehaviorTickState.BehaviorFailed;
+            if (host.Stats.HasConditionEffect(ConditionEffectIndex.Stunned))
+                return BehaviorTickState.BehaviorFailed;
 
             foreach (var enId in host.World.Map.GetEntitiesByName(host.Stats.Pos, _group, _range)) {
                 ref var stats = ref host.World.EntityStats.Get(enId);

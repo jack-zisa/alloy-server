@@ -23,8 +23,8 @@ public record BackAndForth : BehaviorScript {
 
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var backAndForthState = host.Behavior.Resources.ResolveResource<BackAndForthInfo>(this);
-        // if (host.HasConditionEffect(ConditionEffectIndex.Paralyzed)) // TODO: Condition Effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Paralyzed))
+            return BehaviorTickState.BehaviorFailed;
 
         var moveDist = host.Stats.GetSpeed(_speed) * (time.ElapsedMsDelta / 1000f);
         if (backAndForthState.Distance > 0) {

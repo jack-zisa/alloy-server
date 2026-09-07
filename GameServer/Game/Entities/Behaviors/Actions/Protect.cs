@@ -39,8 +39,8 @@ public record Protect : BehaviorScript {
 
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var protectInfo = host.Behavior.Resources.ResolveResource<ProtectInfo>(this);
-        // if (host.HasConditionEffect(ConditionEffectIndex.Paralyzed)) // TODO: condition effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Paralyzed))
+            return BehaviorTickState.BehaviorFailed;
 
         Vector2 vect;
         var s = protectInfo.State;

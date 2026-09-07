@@ -261,8 +261,8 @@ public record Shoot : BehaviorScript {
 
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var shootInfo = host.Behavior.Resources.ResolveResource<ShootInfo>(this);
-        // if (host.HasConditionEffect(ConditionEffectIndex.Stunned)) // TODO: Condition Effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Stunned))
+            return BehaviorTickState.BehaviorFailed;
 
         if (shootInfo.CooldownLeft > 0) {
             shootInfo.CooldownLeft -= time.ElapsedMsDelta;

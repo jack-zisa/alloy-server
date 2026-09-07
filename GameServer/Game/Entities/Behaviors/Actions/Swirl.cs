@@ -35,8 +35,8 @@ public record Swirl : BehaviorScript {
 
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var swirlState = host.Behavior.Resources.ResolveResource<SwirlInfo>(this);
-        // if (host.HasConditionEffect(ConditionEffectIndex.Paralyzed)) // TODO: condition effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Paralyzed))
+            return BehaviorTickState.BehaviorFailed;
 
         var period = (int)(1000 * _radius / host.Stats.GetSpeed(_speed) * (2 * Math.PI));
 

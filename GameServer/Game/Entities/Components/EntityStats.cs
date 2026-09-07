@@ -1,4 +1,3 @@
-using System;
 using System.Buffers;
 using System.Numerics;
 using Common;
@@ -7,6 +6,7 @@ using Common.Resources.World;
 using Common.Structs;
 using Common.Utilities;
 using Common.Utilities.Collections;
+using GameServer.Game.Network.Messaging.Outgoing;
 using GameServer.Game.Worlds;
 using GameServer.Utilities;
 
@@ -22,6 +22,8 @@ public struct EntityStats : IEntityIdentifiable, IDisposable {
     public WorldPosData SpawnPos;
     public MapTileData Tile;
     public BitMask256 Flags;
+    
+    private readonly Dictionary<ConditionEffectIndex, long> _conditionEffects = [];
     
     public readonly StatValue[] Stats;
     public readonly StatData[] StatUpdates;
@@ -51,25 +53,25 @@ public struct EntityStats : IEntityIdentifiable, IDisposable {
         Set(StatType.MaxHP, en.Desc.MaxHP);
     }
 
-    public float GetSpeed(float speed) { // TODO: Condition effect system
+    public float GetSpeed(float speed)
+    {
         if (_type == EntityType.Player) {
-            // if (p.HasConditionEffect(ConditionEffectIndex.Slowed))
-            //     return 1;
-            //
-            // if (p.HasConditionEffect(ConditionEffectIndex.Speedy))
-            //     speed *= 1.5f;
+            if (HasConditionEffect(ConditionEffectIndex.Slowed))
+                return 1;
+            
+            if (HasConditionEffect(ConditionEffectIndex.Speedy))
+                speed *= 1.5f;
 
             var tileSpeedMult = Tile.Desc.Speed; // Sink level is not supported so just use the tile speed
             return speed * tileSpeedMult;
         }
 
         if (_type == EntityType.Character) {
-            // if (chr.HasConditionEffect(ConditionEffectIndex.Slowed))
-            //     return 1;
-            //
-            // if (chr.HasConditionEffect(ConditionEffectIndex.Speedy))
-            //     speed *= 1.5f;
-            return speed;
+            if (HasConditionEffect(ConditionEffectIndex.Slowed))
+                return 1;
+            
+            if (HasConditionEffect(ConditionEffectIndex.Speedy))
+                speed *= 1.5f;
         }
 
         return speed;
@@ -154,6 +156,31 @@ public struct EntityStats : IEntityIdentifiable, IDisposable {
 
         _statUpdatesMask.Clear();
         PositionUpdate = false;
+        
+        foreach (var (effect, expiration) in _conditionEffects) {
+            if (GameLogic.WorldTime.TotalElapsedMs < expiration)
+                continue;
+
+            RemoveConditionEffect(effect);
+        }
+    }
+
+    public bool HasConditionEffect(ConditionEffectIndex effect) {
+        return _conditionEffects.ContainsKey(effect);
+    }
+
+    public void AddConditionEffect(ConditionEffectIndex effect, int duration) {
+        if (_conditionEffects.ContainsKey(effect)) {
+            if (_conditionEffects[effect] >= GameLogic.WorldTime.TotalElapsedMs + duration)
+                return;
+            _conditionEffects[effect] = GameLogic.WorldTime.TotalElapsedMs + duration;
+        } else _conditionEffects.Add(effect, GameLogic.WorldTime.TotalElapsedMs + duration);
+        _world.Users[Id].SendPacket(new ConditionEffect(effect.ToString(), true));
+    }
+
+    public void RemoveConditionEffect(ConditionEffectIndex effect) {
+        _conditionEffects.Remove(effect);
+        _world.Users[Id].SendPacket(new ConditionEffect(effect.ToString(), false));
     }
 
     public void Dispose() {
