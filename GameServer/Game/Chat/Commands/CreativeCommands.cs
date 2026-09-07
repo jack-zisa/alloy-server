@@ -81,7 +81,7 @@ public class GiveCommand : Command {
 }
 
 [Command("effect", CommandPermissionLevel.Player)]
-public class StatusEffectCommand : Command {
+public class EffectCommand : Command {
     public override async Task ExecuteAsync(User user, string args) {
         string[] splitArgs = args.Split(' ');
 
@@ -105,7 +105,7 @@ public class StatusEffectCommand : Command {
 }
 
 [Command("cleareffect", CommandPermissionLevel.Player)]
-public class ClearStatusEffectCommand : Command {
+public class ClearEffectCommand : Command {
     public override async Task ExecuteAsync(User user, string args) {
         if (!Enum.TryParse(args, out ConditionEffectIndex effect)) {
             user.SendError($"Condition effect {args} does not exist.");
