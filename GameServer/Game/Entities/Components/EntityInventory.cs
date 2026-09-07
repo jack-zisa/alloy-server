@@ -47,14 +47,14 @@ public struct EntityInventory : IEntityIdentifiable, IDisposable {
     }
     
     public int GetNextAvailableSlot() {
-        for (var i = 0; i < _items.Length; i++)
+        for (var i = 0; i < _size; i++)
             if (_items[i] == null)
                 return i;
         return -1;
     }
     
     public int GetNextAvailableSlot(int slotType) {
-        for (var i = 0; i < _items.Length; i++)
+        for (var i = 0; i < _size; i++)
             if (_items[i] == null && (_slotTypes[i] == slotType || _slotTypes[i] == 0))
                 return i;
         return -1;
@@ -95,9 +95,10 @@ public struct EntityInventory : IEntityIdentifiable, IDisposable {
     }
 
     public bool IsEmpty() {
-        foreach (var item in _items)
-            if (item != null)
+        for (var i = 0; i < _size; i++) {
+            if (_items[i] != null)
                 return false;
+        }
         return true;
     }
     

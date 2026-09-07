@@ -90,7 +90,7 @@ public class EntityInventoryManager(World world, int capacity) : ManagerBase<Ent
         // the player must be the owner of this container, or the container must be public
         // player must be within 3 tiles of the container
         // if we are swapping to hotbar, item must be equippable in that slot
-
+        
         ref var ent1 = ref _world.EntityInventories.Get(cmd.SlotA.ObjectId);
         if (ent1.Id == EntityId.Null)
             return false;
@@ -135,7 +135,7 @@ public class EntityInventoryManager(World world, int capacity) : ManagerBase<Ent
         var playerSlot = playerIsEnt1 ? cmd.SlotA.SlotId : cmd.SlotB.SlotId;
         var containerSlot = playerIsEnt1 ? cmd.SlotB.SlotId : cmd.SlotA.SlotId;
         var playerItem = playerInv[playerSlot];
-        var containerItem = playerInv[playerSlot];
+        var containerItem = containerInv[containerSlot];
 
         if (cmd.SlotA.SlotId is 255 or 254) { // Handle potion stacking
             if (!playerIsEnt1) // Illegal action
@@ -162,8 +162,9 @@ public class EntityInventoryManager(World world, int capacity) : ManagerBase<Ent
             return true;
         }
         
-        if (!playerInv.IsEquippable(playerItem, playerSlot))
+        if (!playerInv.IsEquippable(containerItem, playerSlot))
             return false;
+        
 
         Swap(ref playerInv, ref containerInv, playerSlot, containerSlot, playerItem, containerItem);
         return true;

@@ -76,7 +76,7 @@ public class GiveCommand : Command {
         
         inventory.SetItem(nextSlot, new Item(item.Root));
         
-        user.SendPacket(new InvUpdate(nextSlot, item.ObjectType));
+        user.SendPacket(new InvUpdate([(nextSlot, item.ObjectType)]));
     }
 }
 
