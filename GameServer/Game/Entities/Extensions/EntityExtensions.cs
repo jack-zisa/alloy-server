@@ -11,6 +11,11 @@ public static class EntityExtensions {
             ref var stats = ref world.EntityStats.Get(en.Id);
             stats.Move(newX, newY);
         }
+        
+        public WorldPosData GetPos(World world) {
+            ref var stats = ref world.EntityStats.Get(en.Id);
+            return stats.Pos;
+        }
 
         public void Init(World world, WorldPosData spawnPos) {
             ref var stats = ref world.EntityStats.Get(en.Id);

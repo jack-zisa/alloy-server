@@ -97,6 +97,7 @@ public static class PlayerExtensions {
                 otherUser.SendPacket(new Text(
                     stats.GetString(StatType.Name),
                     player.Id,
+                    EntityManager.GetCell(player.GetPos(world)),
                     stats.GetInt(StatType.NumStars),
                     5,
                     null,

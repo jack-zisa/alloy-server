@@ -26,7 +26,7 @@ public record Taunt : BehaviorScript {
         if (_cooldownMS == 0 && _rand.NextDouble() < _probability) {
             var text = _text.RandomElement();
             foreach (var user in host.World.Users.Values)
-                user.SendEnemy(ref host.Entity, text);
+                user.SendEnemy(host, text);
         }
     }
 
@@ -44,7 +44,7 @@ public record Taunt : BehaviorScript {
         if (_rand.NextDouble() < _probability) {
             var text = _text.RandomElement();
             foreach (var user in host.World.Users.Values)
-                user.SendEnemy(ref host.Entity, text);
+                user.SendEnemy(host, text);
         }
         return BehaviorTickState.BehaviorActive;
     }

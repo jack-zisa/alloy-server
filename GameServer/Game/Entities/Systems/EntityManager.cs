@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Common.Game;
 using Common.Utilities.Collections;
 using GameServer.Game.Worlds;
@@ -8,6 +9,7 @@ namespace GameServer.Game.Entities.Systems;
 
 public class EntityManager : ManagerBase<Entity> {
 
+    private const float EntityCellSize = 4f;
     public int Count => _idxCounter;
     
     private readonly Stack<int> _freeIdxs;
@@ -30,5 +32,13 @@ public class EntityManager : ManagerBase<Entity> {
     }
 
     public override void Tick(ref RealmTime time) {
+    }
+    
+    public static (int X, int Y) GetCell(Vector2 position) {
+        return GetCell(position.X, position.Y);
+    }
+
+    public static (int X, int Y) GetCell(float x, float y) {
+        return ((int)MathF.Floor(x / EntityCellSize), (int)MathF.Floor(y / EntityCellSize));
     }
 }
