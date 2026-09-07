@@ -91,7 +91,7 @@ public class StatusEffectCommand : Command {
         }
         
         if (!Enum.TryParse(splitArgs[0], out ConditionEffectIndex effect)) {
-            user.SendError($"Condition effect {args} does not exist.");
+            user.SendError($"Condition effect {splitArgs[0]} does not exist.");
             return;
         }
 
