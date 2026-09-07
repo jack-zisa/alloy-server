@@ -29,8 +29,8 @@ public record Charge : BehaviorScript {
 
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var chargeState = host.Behavior.Resources.ResolveResource<ChargeInfo>(this);
-        // if (host.HasConditionEffect(ConditionEffectIndex.Paralyzed)) // TODO: condition effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Paralyzed))
+            return BehaviorTickState.BehaviorFailed;
 
         var status = BehaviorTickState.BehaviorActive;
         if (chargeState.RemainingTime <= 0) {

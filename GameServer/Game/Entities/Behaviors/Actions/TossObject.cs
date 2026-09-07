@@ -93,8 +93,8 @@ public record TossObject : BehaviorScript {
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var tossObjectInfo = host.Behavior.Resources.ResolveResource<TossObjectInfo>(this);
         if (tossObjectInfo.CooldownLeft <= 0) {
-            // if (host.HasConditionEffect(ConditionEffectIndex.Stunned)) // TODO: condition Effects
-            //     return BehaviorTickState.BehaviorFailed;
+            if (host.Stats.HasConditionEffect(ConditionEffectIndex.Stunned))
+                return BehaviorTickState.BehaviorFailed;
 
             if (Random.Shared.NextDouble() > _probability) {
                 tossObjectInfo.CooldownLeft = _cooldownMS;

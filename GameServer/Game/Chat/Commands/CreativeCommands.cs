@@ -83,11 +83,35 @@ public class GiveCommand : Command {
 [Command("effect", CommandPermissionLevel.Player)]
 public class StatusEffectCommand : Command {
     public override async Task ExecuteAsync(User user, string args) {
+        string[] splitArgs = args.Split(' ');
+
+        if (splitArgs.Length < 1) {
+            user.SendError("Usage: /effect <effect> <durationSeconds>");
+            return;
+        }
+        
+        if (!Enum.TryParse(splitArgs[0], out ConditionEffectIndex effect)) {
+            user.SendError($"Condition effect {splitArgs[0]} does not exist.");
+            return;
+        }
+
+        int duration = 10000;
+        if (splitArgs.Length == 2) {
+            if (int.TryParse(splitArgs[1], out var parsedDur)) duration = parsedDur * 1000;
+        }
+        
+        user.GameInfo.World.EntityStats.Get(user.GameInfo.PlayerId).AddConditionEffect(effect, duration);
+    }
+}
+
+[Command("cleareffect", CommandPermissionLevel.Player)]
+public class ClearStatusEffectCommand : Command {
+    public override async Task ExecuteAsync(User user, string args) {
         if (!Enum.TryParse(args, out ConditionEffectIndex effect)) {
             user.SendError($"Condition effect {args} does not exist.");
             return;
         }
         
-        user.SendPacket(new ConditionEffect(args));
+        user.GameInfo.World.EntityStats.Get(user.GameInfo.PlayerId).RemoveConditionEffect(effect);
     }
 }

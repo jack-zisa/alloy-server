@@ -53,8 +53,8 @@ public record RingAttack : BehaviorScript {
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         var state = host.Behavior.Resources.ResolveResource<RingAttackInfo>(this);
 
-        // if (host.HasConditionEffect(ConditionEffectIndex.Stunned)) // TODO: condition effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Stunned))
+            return BehaviorTickState.BehaviorFailed;
 
         if (state.CoolDownLeft > 0) {
             state.CoolDownLeft -= time.ElapsedMsDelta;
@@ -86,8 +86,8 @@ public record RingAttack : BehaviorScript {
         }
 
         var count = _count;
-        // if (host.HasConditionEffect(ConditionEffectIndex.Dazed)) // TODO: condition effects
-        //     count = Math.Max(1, count / 2);
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Dazed))
+            count = Math.Max(1, count / 2);
 
         var dmg = host.Combat.GetProjectileDamage(projProps.MinDamage, projProps.MaxDamage);
         var startAngle = angle * (count - 1) / 2;

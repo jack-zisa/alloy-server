@@ -31,8 +31,8 @@ public record MoveLine : BehaviorScript {
     public override BehaviorTickState Tick(ref EntityView host, ref RealmTime time) {
         ref var stats = ref host.World.EntityStats.Get(host.Id);
         var state = host.Behavior.Resources.ResolveResource<MoveLineInfo>(this);
-        // if (host.HasConditionEffect(ConditionEffectIndex.Paralyzed)) // TODO: Condition effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Paralyzed))
+            return BehaviorTickState.BehaviorFailed;
 
         var vect = new Vector2((float)Math.Cos(_angle), (float)Math.Sin(_angle)).ToWorldPos();
         vect += stats.Pos;

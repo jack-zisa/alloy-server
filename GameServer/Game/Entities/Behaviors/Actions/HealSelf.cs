@@ -40,8 +40,8 @@ public record HealSelf : BehaviorScript {
         }
 
         // If the host is stunned, do not heal
-        // if (host.HasConditionEffect(ConditionEffectIndex.Stunned)) // TODO: COndition effects
-        //     return BehaviorTickState.BehaviorFailed;
+        if (host.Stats.HasConditionEffect(ConditionEffectIndex.Stunned))
+            return BehaviorTickState.BehaviorFailed;
 
         // Calculate the potential heal amount
         var maxHp = host.Stats.GetInt(StatType.MaxHP);
