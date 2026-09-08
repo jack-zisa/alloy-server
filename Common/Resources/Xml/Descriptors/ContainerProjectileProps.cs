@@ -31,7 +31,7 @@ public record ProjectileProps {
     public readonly float Magnitude;
     public readonly int MaxDamage;
     public readonly int MinDamage;
-    public readonly bool MultiHit;
+    public readonly int MultiHit;
     public readonly string ObjectId;
     public readonly bool Parametric;
     public readonly bool PassesCover;
@@ -53,7 +53,7 @@ public record ProjectileProps {
                 (int)(i.GetAttribute<float>("duration") * 1000)))
             .ToArray();
 
-        MultiHit = e.HasElement("MultiHit");
+        MultiHit = e.HasElement("MultiHit") ? e.GetValue<int>("MultiHit", -1) : 1;
         PassesCover = e.HasElement("PassesCover");
         ArmorPiercing = e.HasElement("ArmorPiercing");
         Size = e.GetValue<int>("Size");
@@ -79,7 +79,7 @@ public record ProjectileProps {
     }
 
     public ProjectileProps(string objectId, int lifetimeMs, float speed, int damage = -1, int minDamage = -1,
-        int maxDamage = -1, (ConditionEffectIndex, int)[] effects = null, bool multiHit = false,
+        int maxDamage = -1, (ConditionEffectIndex, int)[] effects = null, int multiHit = 1,
         bool passesCover = false, bool armorPiercing = false,
         bool wavy = false, bool parametric = false, bool boomerang = false, float amplitude = 0, float frequency = 1,
         float magnitude = 3, int size = 100) {

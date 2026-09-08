@@ -194,7 +194,7 @@ public partial class BehaviorLib {
                 new Wander(4.07f),
                 new State("shoot",
                     new Shoot(8, new LinePath(10f), targeted: true, projName: "Gold Bullet", damage: 25,
-                        lifetimeMs: 1000, cooldownMS: 150, size: 150, multiHit: true, passesCover: true),
+                        lifetimeMs: 1000, cooldownMS: 150, size: 150, multiHit: -1, passesCover: true),
                     new TimedTransition(700, "rest")
                 ),
                 new State("rest",

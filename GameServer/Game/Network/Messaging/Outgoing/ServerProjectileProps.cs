@@ -8,7 +8,7 @@ public readonly record struct ServerProjectileProps(
     byte ProjId,
     string ObjectId,
     float Lifetime,
-    bool MultiHit,
+    int MultiHit,
     bool PassesCover,
     bool ArmorPiercing,
     int Size,

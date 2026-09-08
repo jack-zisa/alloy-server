@@ -39,7 +39,7 @@ public record Shoot : BehaviorScript {
     private readonly float _maxRadiusSqr;
     private int _maxDamage;
     private int _minDamage;
-    private bool _multiHit;
+    private int _multiHit;
     private bool _passesCover;
     private bool _armorPiercing;
 
@@ -81,7 +81,7 @@ public record Shoot : BehaviorScript {
         float predictive = 0f, int coolDownOffset = 0, int cooldownMS = 0, bool targeted = false,
         string projName = "",
         int lifetimeMs = 1000, int minDamage = -1, int maxDamage = -1, int damage = -1, float xOffset = 0f,
-        float yOffset = 0f, int size = 100, bool multiHit = false, bool passesCover = false, bool armorPiercing = false,
+        float yOffset = 0f, int size = 100, int multiHit = 1, bool passesCover = false, bool armorPiercing = false,
         float minRadius = 0,
         params (ConditionEffectIndex, int)[] effects) {
         _maxRadiusSqr = maxRadius * maxRadius;
@@ -133,7 +133,7 @@ public record Shoot : BehaviorScript {
         ushort projType = 0, float fixedAngle = 0f, float rotateAngle = 0f, float angleOffset = 0f,
         float predictive = 0f, int coolDownOffset = 0, int cooldownMS = 0, bool targeted = false,
         string projName = "", int minDamage = -1, int maxDamage = -1, int damage = -1, float xOffset = 0f,
-        float yOffset = 0f, int size = 100, bool multiHit = false, bool passesCover = false, bool armorPiercing = false,
+        float yOffset = 0f, int size = 100, int multiHit = 1, bool passesCover = false, bool armorPiercing = false,
         float minRadius = 0,
         params (ConditionEffectIndex, int)[] effects) {
         _maxRadiusSqr = maxRadius * maxRadius;
@@ -179,13 +179,13 @@ public record Shoot : BehaviorScript {
         _armorPiercing = armorPiercing;
         _effects = effects;
     }
-
+    
     public Shoot(float maxRadius, ProjectilePathSegment path, byte count = 1, float shootAngle = 0f,
         ushort projType = 0, float fixedAngle = 0f, float rotateAngle = 0f, float angleOffset = 0f,
         float predictive = 0f, int coolDownOffset = 0, int cooldownMS = 0,
         TargetType targetType = TargetType.ClosestPlayer, string projName = "",
         int lifetimeMs = 1000, int minDamage = -1, int maxDamage = -1, int damage = -1, float xOffset = 0f,
-        float yOffset = 0f, int size = 100, bool multiHit = false, bool passesCover = false, bool armorPiercing = false,
+        float yOffset = 0f, int size = 100, int multiHit = 1, bool passesCover = false, bool armorPiercing = false,
         float minRadius = 0,
         params (ConditionEffectIndex, int)[] effects) {
         _maxRadiusSqr = maxRadius * maxRadius;

@@ -150,7 +150,7 @@ public class ProjectileCollection {
 
     public ContainerProjectileProps AddOrGet(string objectId, int lifetimeMs, float speed, int damage = -1,
         int minDamage = -1,
-        int maxDamage = -1, (ConditionEffectIndex, int)[] effects = null, bool multiHit = false,
+        int maxDamage = -1, (ConditionEffectIndex, int)[] effects = null, int multiHit = 1,
         bool passesCover = false, bool armorPiercing = false,
         bool wavy = false, bool parametric = false, bool boomerang = false, float amplitude = 0, float frequency = 1,
         float magnitude = 3, int size = 100) {

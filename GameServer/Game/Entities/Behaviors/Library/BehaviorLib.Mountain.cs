@@ -120,7 +120,7 @@ public partial class BehaviorLib {
                 shootAngle: 20,
                 predictive: 1,
                 cooldownMS: 500, size: 60,
-                multiHit: true, armorPiercing: true
+                multiHit: -1, armorPiercing: true
             ),
             new Spawn("White Demon", maxDensity: 3, cooldownMs: 60000)
         );
@@ -178,7 +178,7 @@ public partial class BehaviorLib {
             new Follow(distFromTarget: 7, speed: 6.29f), // Speed converted: 1.0 -> 6.29
             new Wander(2.22f), // Speed converted: 0.4 -> 2.22
             new Shoot(path: new LinePath(8f), targeted: true, projName: "Fire Bolt", damage: 70, lifetimeMs: 2000,
-                maxRadius: 12, count: 5, shootAngle: 10, predictive: 1, cooldownMS: 1250, multiHit: true),
+                maxRadius: 12, count: 5, shootAngle: 10, predictive: 1, cooldownMS: 1250, multiHit: -1),
             new Spawn("Ent God", maxDensity: 3, cooldownMs: 60000)
         );
 
@@ -260,7 +260,7 @@ public partial class BehaviorLib {
             ),
             new State("Attacking",
                 new Shoot(8, new LinePath(7f), targeted: true, projName: "White Bullet", damage: 80,
-                    lifetimeMs: 2000, cooldownMS: 2000, size: 80, multiHit: true),
+                    lifetimeMs: 2000, cooldownMS: 2000, size: 80, multiHit: -1),
                 new HealGroup(8, "Papers"),
                 new Taunt("We are impervious to non-mystic attacks!", probability: 0.5f),
                 new TimedTransition(10000, "Waiting")
@@ -282,7 +282,7 @@ public partial class BehaviorLib {
             ),
             new State("Attack",
                 new Shoot(8, new LinePath(3f), targeted: true, projName: "White Bullet", damage: 50,
-                    lifetimeMs: 4000, count: 3, shootAngle: 20, cooldownMS: 800, size: 50, multiHit: true),
+                    lifetimeMs: 4000, count: 3, shootAngle: 20, cooldownMS: 800, size: 50, multiHit: -1),
                 new HealGroup(8, "Steels"),
                 new EntityNotWithinTransition("Idle", radius: 30),
                 new HpLessTransition(0.2f, "Explode")
@@ -290,7 +290,7 @@ public partial class BehaviorLib {
             new State("Explode",
                 new Shoot(10, new LinePath(3f), targeted: false, projName: "White Bullet", damage: 50,
                     lifetimeMs: 4000, count: 10, shootAngle: 36, fixedAngle: 0, cooldownMS: 1000, size: 50,
-                    multiHit: true),
+                    multiHit: -1),
                 new Suicide()
             )
         );
@@ -309,7 +309,7 @@ public partial class BehaviorLib {
             ),
             new State("Attack",
                 new Shoot(8, new LinePath(3f), targeted: true, projName: "White Bullet", damage: 50,
-                    lifetimeMs: 4000, count: 3, shootAngle: 20, cooldownMS: 800, size: 50, multiHit: true),
+                    lifetimeMs: 4000, count: 3, shootAngle: 20, cooldownMS: 800, size: 50, multiHit: -1),
                 new HealGroup(8, "Rocks"),
                 new Taunt("Silly squishy. We heal our brothers in a circle.", probability: 0.5f),
                 new EntityNotWithinTransition("Idle", radius: 30),
@@ -318,7 +318,7 @@ public partial class BehaviorLib {
             new State("Explode",
                 new Shoot(10, new LinePath(3f), targeted: false, projName: "White Bullet", damage: 50,
                     lifetimeMs: 4000, count: 10, shootAngle: 36, fixedAngle: 0, cooldownMS: 1000, size: 50,
-                    multiHit: true),
+                    multiHit: -1),
                 new Suicide()
             )
         );
@@ -513,7 +513,7 @@ public partial class BehaviorLib {
             new Follow(distFromTarget: 7, speed: 6.29f),
             new Wander(2.94f),
             new Shoot(12, new LinePath(8f), targeted: true, projName: "Fire Bolt", damage: 100, lifetimeMs: 2000,
-                count: 5, shootAngle: 10, predictive: 1, cooldownMS: 1250, multiHit: true)
+                count: 5, shootAngle: 10, predictive: 1, cooldownMS: 1250, multiHit: -1)
         );
 
     [CharacterBehavior("Leviathan")]

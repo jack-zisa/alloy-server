@@ -16,6 +16,12 @@ public static class XmlUtils {
             return def;
 
         var value = elem.Element(name).Value;
+
+        if (string.IsNullOrWhiteSpace(value)) {
+            Console.WriteLine(elem.ToString());
+            return def;
+        }
+
         var type = typeof(T);
         if (type == typeof(string))
             return (T)Convert.ChangeType(value, type);

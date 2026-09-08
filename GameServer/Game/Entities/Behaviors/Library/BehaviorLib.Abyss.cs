@@ -136,7 +136,7 @@ public partial class BehaviorLib {
             new State("Explode",
                 new Shoot(path: new LinePath(6.6f), targeted: true, projName: "Red Star", damage: 40,
                     lifetimeMs: 760, maxRadius: 12f, count: 8, shootAngle: 45, fixedAngle: 0, cooldownMS: 1000,
-                    multiHit: true),
+                    multiHit: -1),
                 new Suicide()
             )
         );
@@ -157,7 +157,7 @@ public partial class BehaviorLib {
                     new Flash(0xFFAA00, 0.2, 20),
                     new Shoot(path: new AmplitudePath(8f, 0.3f, 0.5f, lifetimeMs: 500), targeted: true,
                         projName: "White Flame",
-                        damage: 20, lifetimeMs: 500, maxRadius: 8, cooldownMS: 200, multiHit: true),
+                        damage: 20, lifetimeMs: 500, maxRadius: 8, cooldownMS: 200, multiHit: -1),
                     new TimedTransition(4000, "Wait1")
                 ),
                 new State("Wait1",
@@ -173,7 +173,7 @@ public partial class BehaviorLib {
                 new Shoot(path: new AmplitudePath(8f, 0.3f, 0.5f, lifetimeMs: 500), targeted: true,
                     projName: "White Flame",
                     damage: 20, lifetimeMs: 500, maxRadius: 10f, count: 8, shootAngle: 45, fixedAngle: 0,
-                    cooldownMS: 1000, multiHit: true),
+                    cooldownMS: 1000, multiHit: -1),
                 new Suicide()
             )
         );
@@ -292,7 +292,7 @@ public partial class BehaviorLib {
                     cooldownMS: 8000,
                     fixedAngle: 110,
                     armorPiercing: true,
-                    multiHit: true,
+                    multiHit: -1,
                     damage: 100,
                     shootAngle: 36),
                 new Shoot(15,
@@ -305,7 +305,7 @@ public partial class BehaviorLib {
                     cooldownMS: 8000,
                     fixedAngle: 90,
                     armorPiercing: true,
-                    multiHit: true,
+                    multiHit: -1,
                     damage: 100,
                     shootAngle: 36),
                 new Follow(3, cooldownOffsetMS: 1000),
@@ -331,7 +331,7 @@ public partial class BehaviorLib {
                     cooldownMS: 2000,
                     coolDownOffset: 2500,
                     damage: 60,
-                    multiHit: true),
+                    multiHit: -1),
                 new HpLessTransition(0.5f, "return")
             ),
             new State("return",
@@ -367,7 +367,7 @@ public partial class BehaviorLib {
                     cooldownMS: 3000,
                     coolDownOffset: 500,
                     damage: 60,
-                    multiHit: true),
+                    multiHit: -1),
                 new EntityNotWithinTransition(target: "MalphasPortal", radius: 20, targetState: "size")
             ),
             new State("size",
@@ -392,7 +392,7 @@ public partial class BehaviorLib {
                         cooldownMS: 1500,
                         coolDownOffset: 1000,
                         damage: 80,
-                        multiHit: true),
+                        multiHit: -1),
                     new Shoot(15,
                         new ProjectilePath(400, new LinePath(0))
                             .Then(3000, new LinePath(7)),
@@ -403,7 +403,7 @@ public partial class BehaviorLib {
                         cooldownMS: 1500,
                         coolDownOffset: 1000,
                         damage: 80,
-                        multiHit: true),
+                        multiHit: -1),
                     new Shoot(15,
                         new ProjectilePath(400, new LinePath(0))
                             .Then(3000, new LinePath(7)),
@@ -414,7 +414,7 @@ public partial class BehaviorLib {
                         cooldownMS: 1500,
                         coolDownOffset: 1000,
                         damage: 80,
-                        multiHit: true),
+                        multiHit: -1),
                     new Shoot(15,
                         new ProjectilePath(1000, new LinePath(6))
                             .Then(1000, new LinePath(0))
@@ -430,7 +430,7 @@ public partial class BehaviorLib {
                         damage: 100,
                         predictive: 1,
                         armorPiercing: true,
-                        multiHit: true)
+                        multiHit: -1)
                 )
             )
         );
@@ -480,7 +480,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 1000,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new DeceleratePath(2)),
                     4,
@@ -493,7 +493,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 1200,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new DeceleratePath(2)),
                     4,
@@ -506,7 +506,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 1200,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new DeceleratePath(2)),
                     4,
@@ -519,7 +519,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 1400,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new DeceleratePath(2)),
                     4,
@@ -532,7 +532,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 1400,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
 
                 // blast
                 new Shoot(15,
@@ -545,7 +545,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 2000,
                     damage: 100,
                     size: 120,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(2000, new ChangeSpeedPath(2, 0.5F, 500)),
                     2,
@@ -555,7 +555,7 @@ public partial class BehaviorLib {
                     cooldownMS: 2000,
                     coolDownOffset: 2000,
                     damage: 85,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(2000, new ChangeSpeedPath(2, 0.5F, 500)),
                     2,
@@ -565,7 +565,7 @@ public partial class BehaviorLib {
                     cooldownMS: 2000,
                     coolDownOffset: 2000,
                     damage: 85,
-                    multiHit: true),
+                    multiHit: -1),
 
                 // circles
                 // 1
@@ -580,7 +580,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 3000,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new CirclePath(0.2F, 2))
                         .Then(1000, new LinePath(3))
@@ -592,7 +592,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 3000,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new CirclePath(0.2F, 2))
                         .Then(1000, new LinePath(3))
@@ -604,7 +604,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 3000,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new CirclePath(0.2F, 2))
                         .Then(1000, new LinePath(3))
@@ -616,7 +616,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 3000,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
 
                 // 2
                 new Shoot(15,
@@ -630,7 +630,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 9200,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new CirclePath(-0.2F, 2))
                         .Then(1000, new LinePath(3))
@@ -642,7 +642,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 9200,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new CirclePath(-0.2F, 2))
                         .Then(1000, new LinePath(3))
@@ -654,7 +654,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 9200,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true),
+                    multiHit: -1),
                 new Shoot(15,
                     new ProjectilePath(4000, new CirclePath(-0.2F, 2))
                         .Then(1000, new LinePath(3))
@@ -666,7 +666,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 9200,
                     damage: 100,
                     armorPiercing: true,
-                    multiHit: true)
+                    multiHit: -1)
             )
         );
 }

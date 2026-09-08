@@ -32,7 +32,7 @@ public class ProjectileDesc : ItemData {
             effects.Add(new ConditionEffectDesc(k));
         Effects = effects.ToArray();
 
-        MultiHit = e.HasElement("MultiHit");
+        MultiHit = e.HasElement("MultiHit") ? e.GetAttribute<int>("value", -1) : 1;
         PassesCover = e.HasElement("PassesCover");
         ArmorPiercing = e.HasElement("ArmorPiercing");
         Size = e.GetValue<int>("Size");
@@ -103,8 +103,8 @@ public class ProjectileDesc : ItemData {
         set => SetValue(7, value);
     }
 
-    public bool MultiHit {
-        get => GetValue<bool>(8);
+    public int MultiHit {
+        get => GetValue<int>(8);
         set => SetValue(8, value);
     }
 

@@ -27,7 +27,7 @@ public struct Projectile : IEntityIdentifiable, IDisposable {
     public int Damage;
     public int LifetimeMs;
     public long EndTime;
-    public bool MultiHit;
+    public int MultiHit;
     
     public ushort LocalId;
 
@@ -42,7 +42,7 @@ public struct Projectile : IEntityIdentifiable, IDisposable {
         OwnerAccId = user ? userOwner.GameInfo.Account.Id : -1;
     }
 
-    public void SetProps(ProjectilePath path, float angle, int damage, int lifetimeMs, bool multiHit) {
+    public void SetProps(ProjectilePath path, float angle, int damage, int lifetimeMs, int multiHit) {
         Angle = angle.Deg2Rad();
         Damage = damage;
         Path = path;
@@ -54,12 +54,16 @@ public struct Projectile : IEntityIdentifiable, IDisposable {
     public void SetLocalId(ushort localId) {
         LocalId = localId;
     }
+    
+    public bool HasHit() {
+        return MultiHit != -1 && Hit.Count >= MultiHit;
+    }
 
     public bool Tick(ref RealmTime time) {
         if (time.TotalElapsedMs >= EndTime)
             return true;
 
-        if (!MultiHit && Hit.Count != 0)
+        if (HasHit())
             return false;
 
         var pos = StartPos + Path.PositionAt((int)(time.TotalElapsedMs - StartTime), LocalId, Angle);
@@ -68,7 +72,7 @@ public struct Projectile : IEntityIdentifiable, IDisposable {
             return true;
         
         foreach (var targetId in targets.TargetIds) {
-            if (!MultiHit && Hit.Count != 0)
+            if (HasHit())
                 break;
 
             ref var targetStats = ref _world.EntityStats.Get(targetId);
@@ -79,6 +83,9 @@ public struct Projectile : IEntityIdentifiable, IDisposable {
     }
 
     public void TryHitEntity(EntityId enId) {
+        if (HasHit())
+            return;
+        
         if (Hit.Add(enId, true) == -1)
             return;
 

@@ -13,7 +13,7 @@ public static class CombatExtensions {
     extension(World world) {
         public void EnemyShootProjectiles(WorldPosData startPos,
             EntityId ownerId, byte propsId, float angleDeg, int damage, byte count, float angleIncDeg,
-            ProjectilePath path, int lifetimeMs, bool multiHit, ref RealmTime time) {
+            ProjectilePath path, int lifetimeMs, int multiHit, ref RealmTime time) {
             var firstProjId = world.SpawnProjectiles(startPos, ownerId, angleDeg, angleIncDeg, damage, count, path, lifetimeMs, multiHit, ref time);
             
             ref var enProjs = ref world.EntityProjectiles.Get(ownerId);
@@ -43,7 +43,7 @@ public static class CombatExtensions {
             byte numShots,
             ProjectilePath path,
             int lifetimeMs,
-            bool multiHit,
+            int multiHit,
             ref RealmTime time) {
             ushort? firstId = null;
             for (var i = 0; i < numShots; i++) {
