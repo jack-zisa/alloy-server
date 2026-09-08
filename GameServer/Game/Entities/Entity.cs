@@ -1,10 +1,5 @@
-using System;
-using System.ComponentModel;
-using System.Threading;
-using Common.Resources.World;
 using Common.Resources.Xml;
 using Common.Resources.Xml.Descriptors;
-using Common.Structs;
 using Common.Utilities;
 using Common.Utilities.Collections;
 
@@ -14,8 +9,16 @@ public struct Entity : IEntityIdentifiable, IEquatable<Entity>, IDisposable {
     public EntityId Id { get; set; }
     public ushort ObjectType { get; }
     public EntityType Type { get; }
-    public readonly ObjectDesc Desc => XmlLibrary.ObjectDescs[ObjectType];
-    
+    public readonly ObjectDesc Desc
+    {
+        get
+        {
+            if (Type == EntityType.Player)
+                return XmlLibrary.PlayerDescs[ObjectType];
+            return XmlLibrary.ObjectDescs[ObjectType];
+        }
+    }
+
     public Entity(ushort objType) {
         ObjectType = objType;
         Type = ResolveType(objType);

@@ -148,7 +148,13 @@ public class World {
             case EntityType.Player:
                 var slotTypes = XmlLibrary.PlayerDescs[en.Desc.ObjectType].SlotTypes;
                 inv = new EntityInventory(this, ref en, 20);
-                inv.Init(slotTypes, []);
+
+                Span<int> itemTypes = [];
+                if (en.Desc is PlayerDesc playerDesc) {
+                    itemTypes = playerDesc.Equipment;
+                }
+                
+                inv.Init(slotTypes, itemTypes);
                 EntityInventories.Add(ref inv);
                 events = new EntityEvents(this, ref en);
                 EntityEvents.Add(ref events);

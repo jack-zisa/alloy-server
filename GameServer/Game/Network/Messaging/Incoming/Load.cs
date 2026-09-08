@@ -21,7 +21,7 @@ public record Load : IIncomingPacket {
             return;
         }
         
-        var chr = user.GameInfo.Char;
+        var chr = user.GameInfo.Account.Characters[user.GameInfo.CharId];
         if (user.State != ConnectionState.Reconnecting) {
             chr = DbClient.GetCharacter(user.GameInfo.Account.Id, CharId);
             if (chr == null) {

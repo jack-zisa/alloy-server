@@ -1,4 +1,5 @@
-﻿using Common.Database.Models;
+﻿using Common.Database;
+using Common.Database.Models;
 using Common.Game;
 using Common.Structs;
 using Common.Utilities;
@@ -21,7 +22,7 @@ public class GameInfo {
     public readonly User User;
     public Account Account;
     public World World;
-    public Character Char;
+    public int CharId;
     public EntityId PlayerId;
     
     public ref Entity Player => ref World.Entities.Get(PlayerId);
@@ -41,11 +42,11 @@ public class GameInfo {
 
     public void Load(Character chr, World world) {
         State = GameState.Playing;
-        Char = chr;
+        CharId = chr.CharId;
         
         var plr = new Entity(chr.ObjectType);
         ref var newPlr = ref world.EnterPlayer(ref plr, User);
-        newPlr.InitPlayer(User, world, Account, Char);
+        newPlr.InitPlayer(User, world, Account, Account.Characters[CharId]);
         newPlr.MoveToSpawn(world);
         
         PlayerId = newPlr.Id;
@@ -54,7 +55,11 @@ public class GameInfo {
     public void Unload() {
         ref var inv = ref World.EntityInventories.Get(PlayerId);
         if (inv.Id != EntityId.Null)
-            inv.Save(Char);
+        {
+            inv.Save(Account.Characters[CharId]);
+        }
+        
+        _ = DbClient.FlushAsync(Account);
         
         World?.LeaveWorld(PlayerId);
         State = GameState.Idle;
@@ -64,7 +69,7 @@ public class GameInfo {
     public void Reset() {
         State = GameState.Idle; // Change our state first
         World = null;
-        Char = null;
+        CharId = -1;
         PlayerId = EntityId.Null;
     }
 }
