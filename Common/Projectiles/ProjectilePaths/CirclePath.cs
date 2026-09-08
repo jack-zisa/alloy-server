@@ -13,9 +13,9 @@ namespace Common.Projectiles.ProjectilePaths;
 public class CirclePath : ProjectilePathSegment {
     private readonly float radius;
 
-    public CirclePath(float rotationsPerSecond, float radius, float? angle = null, int? lifetimeMs = null,
+    public CirclePath(float rotationsPerSecond, float radius, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null,
         int? timeOffset = null, params PathSegmentModifier[] mods)
-        : base(PathType.CirclePath, rotationsPerSecond, angle, lifetimeMs, timeOffset, mods) {
+        : base(PathType.CirclePath, rotationsPerSecond, angle, lifetimeMs, acceleration, timeOffset, mods) {
         this.radius = radius;
     }
 
@@ -43,6 +43,6 @@ public class CirclePath : ProjectilePathSegment {
     }
 
     public override ProjectilePathSegment Clone() {
-        return new CirclePath(Speed / 50, radius, FixedAngle, LifetimeMs, TimeOffset);
+        return new CirclePath(Speed / 50, radius, FixedAngle, LifetimeMs, Acceleration, TimeOffset);
     }
 }

@@ -6,9 +6,6 @@ public enum PathType : byte {
     CirclePath,
     AmplitudePath,
     BoomerangPath,
-    AcceleratePath,
-    DeceleratePath,
-    ChangeSpeedPath,
     CombinedPath
 }
 

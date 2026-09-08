@@ -1,5 +1,6 @@
 using Common;
 using Common.Projectiles.ProjectilePaths;
+using Common.Resources.Xml.Descriptors;
 using GameServer.Game.Entities.Behaviors.Actions;
 using GameServer.Game.Entities.Behaviors.Transitions;
 
@@ -116,7 +117,7 @@ public partial class BehaviorLib {
             new State("p1",
                 new Wander(3F),
                 new Shoot(15,
-                    new ProjectilePath(1000, new ChangeSpeedPath(3, -1F, 400, repeat: 2)),
+                    new ProjectilePath(1000, new LinePath(3, acceleration: new AccelerationDesc(-1, cooldown:400, repeat:2))),
                     3,
                     15,
                     projName: "Lightning Blast",
@@ -473,7 +474,7 @@ public partial class BehaviorLib {
                     range: 10, effects: [(ConditionEffectIndex.Quiet, 2000)]),
                 new Spawn("LabTurret", cooldownMs: 4000, cooldownOffsetMs: 3000, maxDensity: 3, densityRadius: 10),
                 new Shoot(15,
-                    new ProjectilePath(3000, new ChangeSpeedPath(3, 1, 1000)),
+                    new ProjectilePath(3000, new LinePath(3, acceleration:new AccelerationDesc(1, cooldown:1000))),
                     3,
                     size: 130,
                     shootAngle: 15,
@@ -483,7 +484,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 2000,
                     damage: 180),
                 new Shoot(15,
-                    new ProjectilePath(3000, new ChangeSpeedPath(3, 1, 1000)),
+                    new ProjectilePath(3000, new LinePath(3, acceleration:new AccelerationDesc(1, cooldown:1000))),
                     4,
                     size: 70,
                     shootAngle: 40,
@@ -557,7 +558,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 4000,
                     damage: 120),
                 new Shoot(15,
-                    new ProjectilePath(3000, new ChangeSpeedPath(3, 1, 1000)),
+                    new ProjectilePath(3000, new LinePath(3, acceleration:new AccelerationDesc(1, cooldown:1000))),
                     3,
                     size: 130,
                     shootAngle: 10,
@@ -593,7 +594,7 @@ public partial class BehaviorLib {
             new State("p1",
                 new Taunt("RAHHHHHHH!", 1000000),
                 new Shoot(15,
-                    new ProjectilePath(3000, new ChangeSpeedPath(7, 1.5F, 500)),
+                    new ProjectilePath(3000, new LinePath(7, acceleration:new AccelerationDesc(1.5f, cooldown:500))),
                     20,
                     size: 175,
                     shootAngle: 18,
@@ -634,7 +635,7 @@ public partial class BehaviorLib {
                     coolDownOffset: 1000,
                     damage: 150),
                 new Shoot(15,
-                    new ProjectilePath(9000, new ChangeSpeedPath(10, -2, 1000)),
+                    new ProjectilePath(9000, new LinePath(10, acceleration:new AccelerationDesc(-2, cooldown:1000))),
                     20,
                     size: 100,
                     shootAngle: 18,

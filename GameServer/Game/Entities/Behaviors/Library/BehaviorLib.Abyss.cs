@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.Projectiles.ProjectilePaths;
+using Common.Resources.Xml.Descriptors;
 using GameServer.Game.Entities.Behaviors.Actions;
 using GameServer.Game.Entities.Behaviors.Transitions;
 
@@ -312,7 +313,7 @@ public partial class BehaviorLib {
                 new Protect(3, "AbyssAnchor", 10, 6),
                 new Shoot(15,
                     new ProjectilePath(800, new LinePath(6.5F))
-                        .Then(2000, new DeceleratePath(4)),
+                        .Then(2000, new LinePath(4, acceleration: new AccelerationDesc(4))),
                     4,
                     10,
                     projName: "Wakizashi Fire",
@@ -322,7 +323,7 @@ public partial class BehaviorLib {
                     damage: 50),
                 new Shoot(15,
                     new ProjectilePath(200, new LinePath(6.5F))
-                        .Then(2000, new DeceleratePath(4)),
+                        .Then(2000, new LinePath(4, acceleration: new AccelerationDesc(4))),
                     8,
                     size: 120,
                     shootAngle: 45,
@@ -469,7 +470,7 @@ public partial class BehaviorLib {
 
                 // wave
                 new Shoot(15,
-                    new ProjectilePath(4000, new DeceleratePath(2)),
+                    new ProjectilePath(4000, new LinePath(4, acceleration: new AccelerationDesc(2))),
                     4,
                     90,
                     fixedAngle: 90,
@@ -482,7 +483,7 @@ public partial class BehaviorLib {
                     armorPiercing: true,
                     multiHit: true),
                 new Shoot(15,
-                    new ProjectilePath(4000, new DeceleratePath(2)),
+                    new ProjectilePath(4000, new LinePath(4, acceleration: new AccelerationDesc(2))),
                     4,
                     90,
                     fixedAngle: 110,
@@ -495,7 +496,7 @@ public partial class BehaviorLib {
                     armorPiercing: true,
                     multiHit: true),
                 new Shoot(15,
-                    new ProjectilePath(4000, new DeceleratePath(2)),
+                    new ProjectilePath(4000, new LinePath(4, acceleration: new AccelerationDesc(2))),
                     4,
                     90,
                     fixedAngle: 70,
@@ -508,7 +509,7 @@ public partial class BehaviorLib {
                     armorPiercing: true,
                     multiHit: true),
                 new Shoot(15,
-                    new ProjectilePath(4000, new DeceleratePath(2)),
+                    new ProjectilePath(4000, new LinePath(4, acceleration: new AccelerationDesc(2))),
                     4,
                     90,
                     fixedAngle: 130,
@@ -521,7 +522,7 @@ public partial class BehaviorLib {
                     armorPiercing: true,
                     multiHit: true),
                 new Shoot(15,
-                    new ProjectilePath(4000, new DeceleratePath(2)),
+                    new ProjectilePath(4000, new LinePath(4, acceleration: new AccelerationDesc(2))),
                     4,
                     90,
                     fixedAngle: 50,
@@ -536,7 +537,7 @@ public partial class BehaviorLib {
 
                 // blast
                 new Shoot(15,
-                    new ProjectilePath(2000, new ChangeSpeedPath(2, 0.5F, 500)),
+                    new ProjectilePath(2000, new LinePath(2, acceleration: new AccelerationDesc(0.5f, cooldown:500))),
                     2,
                     5,
                     projName: "Idol Blast",
@@ -547,7 +548,7 @@ public partial class BehaviorLib {
                     size: 120,
                     multiHit: true),
                 new Shoot(15,
-                    new ProjectilePath(2000, new ChangeSpeedPath(2, 0.5F, 500)),
+                    new ProjectilePath(2000, new LinePath(2, acceleration: new AccelerationDesc(0.5f, cooldown:500))),
                     2,
                     50,
                     projName: "Idol Blast",
@@ -557,7 +558,7 @@ public partial class BehaviorLib {
                     damage: 85,
                     multiHit: true),
                 new Shoot(15,
-                    new ProjectilePath(2000, new ChangeSpeedPath(2, 0.5F, 500)),
+                    new ProjectilePath(2000, new LinePath(2, acceleration: new AccelerationDesc(0.5f, cooldown:500))),
                     2,
                     55,
                     projName: "Idol Blast",

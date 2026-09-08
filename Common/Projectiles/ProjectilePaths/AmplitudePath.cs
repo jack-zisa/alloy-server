@@ -13,9 +13,9 @@ public class AmplitudePath : ProjectilePathSegment {
     private readonly float amplitude;
     private readonly float frequency;
 
-    public AmplitudePath(float speed, float amplitude, float frequency, float? angle = null, int? lifetimeMs = null,
+    public AmplitudePath(float speed, float amplitude, float frequency, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null,
         int? timeOffset = null, params PathSegmentModifier[] mods)
-        : base(PathType.AmplitudePath, speed, angle, lifetimeMs, timeOffset, mods) {
+        : base(PathType.AmplitudePath, speed, angle, lifetimeMs, acceleration, timeOffset, mods) {
         this.amplitude = amplitude;
         this.frequency = frequency;
     }
@@ -48,6 +48,6 @@ public class AmplitudePath : ProjectilePathSegment {
     }
 
     public override ProjectilePathSegment Clone() {
-        return new AmplitudePath(Speed, amplitude, frequency, FixedAngle, LifetimeMs, TimeOffset);
+        return new AmplitudePath(Speed, amplitude, frequency, FixedAngle, LifetimeMs, Acceleration, TimeOffset);
     }
 }

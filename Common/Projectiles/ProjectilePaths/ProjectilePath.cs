@@ -39,8 +39,8 @@ public class ProjectilePath {
         foreach (var segment in projectilePathSegments) {
             segmentEnd += segment.LifetimeMs;
             if (relativeElapsed <= segmentEnd) {
-                var ret = segment.PositionAt(relativeElapsed -
-                                             segmentsTotal, projId, angle); // Position offset relative to the segment start
+                segment.UpdateAcceleration(relativeElapsed - segmentsTotal);
+                var ret = segment.PositionAt(relativeElapsed - segmentsTotal, projId, angle); // Position offset relative to the segment start
                 return startPos + ret; // Position offset relative to the path start
             }
 

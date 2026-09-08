@@ -36,6 +36,7 @@ public class CombinedPath : ProjectilePathSegment {
             if (segment.TimeOffset > 0 && elapsedLifetimeMs < segment.TimeOffset)
                 continue;
 
+            segment.UpdateAcceleration(elapsedLifetimeMs);
             var segmentOffset = segment.PositionAt(elapsedLifetimeMs, projId, angle);
             deltaX += segmentOffset.X;
             deltaY += segmentOffset.Y;

@@ -40,6 +40,8 @@ public class ProjectileDesc : ItemData {
         Parametric = e.HasElement("Parametric");
         Boomerang = e.HasElement("Boomerang");
 
+        Acceleration = e.HasElement("Acceleration") ? new AccelerationDesc(e.Element("Acceleration")) : null;;
+        
         Amplitude = e.GetValue<float>("Amplitude");
         Frequency = e.GetValue<float>("Frequency", 1);
         Magnitude = e.GetValue<float>("Magnitude", 3);
@@ -160,6 +162,8 @@ public class ProjectileDesc : ItemData {
 
     public ProjectilePath Path { get; set; }
 
+    public AccelerationDesc Acceleration { get; set; }
+    
     public void SetContainer(ushort containerType) {
         ContainerType = containerType;
     }

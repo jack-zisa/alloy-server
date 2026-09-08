@@ -9,9 +9,9 @@ using Common.Resources.Xml.Descriptors;
 namespace Common.Projectiles.ProjectilePaths;
 
 public class LinePath : ProjectilePathSegment {
-    public LinePath(float speed, float? angle = null, int? lifetimeMs = null, int? timeOffset = null,
+    public LinePath(float speed, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null, int? timeOffset = null,
         params PathSegmentModifier[] mods)
-        : base(PathType.LinePath, speed, angle, lifetimeMs, timeOffset, mods) { }
+        : base(PathType.LinePath, speed, angle, lifetimeMs, acceleration, timeOffset, mods) { }
 
     public override Vector2 PositionAt(int elapsedLifetimeMs, int projId, float angle) {
         var p = Vector2.Zero;
@@ -29,6 +29,6 @@ public class LinePath : ProjectilePathSegment {
     }
 
     public override ProjectilePathSegment Clone() {
-        return new LinePath(Speed, FixedAngle, LifetimeMs, TimeOffset);
+        return new LinePath(Speed, FixedAngle, LifetimeMs, Acceleration, TimeOffset);
     }
 }

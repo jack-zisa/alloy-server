@@ -9,9 +9,9 @@ using Common.Resources.Xml.Descriptors;
 namespace Common.Projectiles.ProjectilePaths;
 
 public class WavyPath : ProjectilePathSegment {
-    public WavyPath(float speed, float? angle = null, int? lifetimeMs = null, int? timeOffset = null,
+    public WavyPath(float speed, float? angle = null, int? lifetimeMs = null, AccelerationDesc acceleration = null, int? timeOffset = null,
         params PathSegmentModifier[] mods)
-        : base(PathType.WavyPath, speed, angle, lifetimeMs, timeOffset, mods) { }
+        : base(PathType.WavyPath, speed, angle, lifetimeMs, acceleration, timeOffset, mods) { }
 
     public override Vector2 PositionAt(int elapsedLifetimeMs, int projId, float angle) {
         var p = Vector2.Zero;
@@ -33,6 +33,6 @@ public class WavyPath : ProjectilePathSegment {
     }
 
     public override ProjectilePathSegment Clone() {
-        return new WavyPath(Speed, FixedAngle, LifetimeMs, TimeOffset);
+        return new WavyPath(Speed, FixedAngle, LifetimeMs, Acceleration, TimeOffset);
     }
 }
